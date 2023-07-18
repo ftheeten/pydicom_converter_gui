@@ -22,7 +22,7 @@ def convert_to_dicom(p_file):
     width, height = img.size
     if img.mode == 'RGBA' or img.mode == 'RGB':
         np_frame = numpy.array(img.getdata(), dtype=numpy.uint8)
-        np_frame=pydicom.pixel_data_handlers.convert_color_space(np_frame,'RGB', "YBR_FULL_422", True)
+        #np_frame=pydicom.pixel_data_handlers.convert_color_space(np_frame,'RGB', "YBR_FULL_422", True)
     else:
         np_frame=numpy.array(img.getdata(), dtype=numpy.uint8)
     
@@ -34,8 +34,8 @@ def convert_to_dicom(p_file):
     ds.file_meta.ImplementationClassUID = "1.2.3.4"
     ds.Rows = img.height
     ds.Columns = img.width
-    ds.PhotometricInterpretation = "YBR_FULL_422"
-    #ds.PhotometricInterpretation = "YBR"
+    #ds.PhotometricInterpretation = "YBR_FULL_422"
+    ds.PhotometricInterpretation = "RGB"
     if np_frame.shape[1] == 3:
         print("3")
         ds.SamplesPerPixel = 3
