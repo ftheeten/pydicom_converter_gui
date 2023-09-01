@@ -33,16 +33,11 @@ def convert_to_dicom(p_file):
     
     
     ds.file_meta = Dataset()
-    '''
-    ds.file_meta.TransferSyntaxUID = pydicom.uid.ExplicitVRLittleEndian
-    ds.file_meta.MediaStorageSOPClassUID = '1.2.840.10008.5.1.4.1.1.1.1'
-    ds.file_meta.MediaStorageSOPInstanceUID = "1.2.3"
-    ds.file_meta.ImplementationClassUID = "1.2.3.4"
-    '''
+
     ds.Rows = img.height
     ds.Columns = img.width
     
-    ds.PhotometricInterpretation = "RGB"
+
 
     ds.SamplesPerPixel = 3
     
@@ -59,17 +54,16 @@ def convert_to_dicom(p_file):
     ds.StudyInstanceUID = generate_uid()
     ds.SeriesInstanceUID = generate_uid()
     
-    ds.SOPClassUID = generate_uid()
-    ds.SOPInstanceUID = generate_uid()
-    ds.StudyInstanceUID = generate_uid()
-    ds.SeriesInstanceUID = generate_uid()
     ds.PixelData = encapsulate([output.getvalue()])
     # Need to set this flag to indicate the Pixel Data is compressed
     ds['PixelData'].is_undefined_length = True  # Only needed for < v1.4
     ds.PhotometricInterpretation = "YBR_FULL_422"
+    
     ds.file_meta.TransferSyntaxUID = JPEGExtended
+    
     ds.is_little_endian = True
     ds.is_implicit_VR = False  
+    
     ds.save_as(target_name, write_like_original=False)
     print("conversion done...")
 
