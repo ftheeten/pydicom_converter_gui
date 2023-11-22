@@ -32,13 +32,7 @@ def ensure_even(stream):
         return stream + b"\x00"
     return stream
     
-class BytesIOFR(io.BytesIO):
-  
-  def __len__(self):
-    self.seek(0, io.SEEK_END)
-    tmp=self.tell()
-    print(tmp)
-    return tmp
+
   
 def convert_to_dicom(p_file):
     print("wait...")
