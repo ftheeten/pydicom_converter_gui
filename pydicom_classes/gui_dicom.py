@@ -64,7 +64,7 @@ class DicomGui(QApplication):
         if not self.MODE_FOLDER:
             print("MODE_FILE")
             file_name = QFileDialog()
-            filter = "TIFF (*.TIF);;tiff (*.tif);;TIFF (*.TIFF);;tiff (*.tiff);;JPG (*.jpg);;JPG (*.JPG);;PNG (*.PNG);;PNG (*.png)"
+            filter = "TIFF (*.TIF);;TIFF (*.TIFF);;tiff (*.tiff);;JPG (*.jpg);;JPEG (*.JPEG);;PNG (*.PNG)"
             self.filenames, _ = file_name.getOpenFileNames(self.window, "Open files", "", filter)
             print("FILES\n"+"\n".join(self.filenames))
         else:
@@ -105,9 +105,23 @@ class DicomGui(QApplication):
                     metadata=MetadataDicom(dicom)
                     metadata.setMetadata()
                     #saving
-                    dicom.save_dicom_jpeg()
-                    pass
-                
+                    dicom.save_dicom()
+                elif f.lower().endswith('.png'):
+                    print("is_png")
+                    dicom=ProcessDicom(f, full_dicom, "jpeg", "JPEGExtended")
+                    # dependency injection for metadata update
+                    metadata=MetadataDicom(dicom)
+                    metadata.setMetadata()
+                    #saving
+                    dicom.save_dicom()    
+                elif f.lower().endswith('.tiff') or f.lower().endswith('.tif'):
+                    print("is_tiff")
+                    dicom=ProcessDicom(f, full_dicom, "tif")
+                    # dependency injection for metadata update
+                    metadata=MetadataDicom(dicom)
+                    metadata.setMetadata()
+                    #saving
+                    dicom.save_dicom()    
                  
             
         
