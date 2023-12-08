@@ -101,27 +101,19 @@ class DicomGui(QApplication):
                 if f.lower().endswith('.jpg') or  f.lower().endswith('.jpeg'):
                     print("is_jpeg")
                     dicom=ProcessDicom(f, full_dicom, "jpeg", "JPEGExtended")
-                    # dependency injection for metadata update
-                    metadata=MetadataDicom(dicom)
-                    metadata.setMetadata()
-                    #saving
-                    dicom.save_dicom()
+                    
                 elif f.lower().endswith('.png'):
                     print("is_png")
                     dicom=ProcessDicom(f, full_dicom, "jpeg", "JPEGExtended")
-                    # dependency injection for metadata update
-                    metadata=MetadataDicom(dicom)
-                    metadata.setMetadata()
-                    #saving
-                    dicom.save_dicom()    
+                    
                 elif f.lower().endswith('.tiff') or f.lower().endswith('.tif'):
                     print("is_tiff")
                     dicom=ProcessDicom(f, full_dicom, "tif")
-                    # dependency injection for metadata update
-                    metadata=MetadataDicom(dicom)
-                    metadata.setMetadata()
-                    #saving
-                    dicom.save_dicom()    
+                # dependency injection for metadata update
+                metadata=MetadataDicom(dicom)
+                metadata.setMetadata(p_patient_name=full_dicom)
+                #saving
+                dicom.save_dicom()    
                  
             
         
